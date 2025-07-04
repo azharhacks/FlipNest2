@@ -12,16 +12,16 @@ import Register from './pages/Register';
 function App() {
   return (
     <Router>
-      <Header />
+      
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/browse" element={<Browse />} />
+       
+        <Route path="/Browse" element={<Browse />} />
         {/*<Route path="/sell" element={<Sell />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />*/}
       </Routes>
-      <Footer />
+      
     </Router>
   );
 }
