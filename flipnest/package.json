@@ -24,7 +24,8 @@
   "bugs": {
     "url": "https://github.com/azharhacks/FlipNest2/issues"
   },
-  "homepage": "https://github.com/azharhacks/FlipNest2#readme",
+  "homepage": "https://azharhacks.github.io/FlipNest2"
+,
   "description": "",
   "browserslist": {
     "production": [
