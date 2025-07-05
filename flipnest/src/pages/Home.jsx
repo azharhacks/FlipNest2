@@ -8,6 +8,7 @@ import '../styles/modern.css';
 const Home = () => {
   return (
     <>
+    <body>
       <Header />
       <section className="hero-section">
         <div className="container">
@@ -41,6 +42,7 @@ const Home = () => {
       </section>
       {/* Add more home page sections as needed */}
       <Footer />
+      </body>
     </>
   );
 };

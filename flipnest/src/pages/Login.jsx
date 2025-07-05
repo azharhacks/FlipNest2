@@ -8,6 +8,7 @@ import '../styles/modern.css';
 const Login = () => {
   return (
     <>
+    <body>
       <Header />
       <section className="auth-section">
         <div className="container">
@@ -29,6 +30,7 @@ const Login = () => {
         </div>
       </section>
       <Footer />
+      </body>
     </>
   );
 };
