@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import Messages from './Messages';
 import '../styles/styles.css';
 import '../styles/modern.css';
 import '../styles/profile.css'; // Import profile-specific CSS  
@@ -27,8 +29,8 @@ function Profile (){
                     />
                   </div>
                   <div className="profile-info">
-                    <h2 id="profile-name">John Doe</h2>
-                    <p id="profile-email">john@example.com</p>
+                    <h2 id="profile-name">Azhar Abeid</h2>
+                    <p id="profile-email">azharabeid@gmail.com</p>
                   </div>
                 </div>
 
@@ -75,9 +77,9 @@ function Profile (){
                     </a>
                   </li>
                   <li>
-                    <a href="#" data-tab="messages">
+                        <li><Link to="/Messages"><i class="fas fa-envelope"></i> Messages</Link></li>
                       <i className="fas fa-envelope"></i> Messages
-                    </a>
+                    
                   </li>
                   <li>
                     <a href="#" data-tab="settings">

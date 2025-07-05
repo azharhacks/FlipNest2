@@ -3,6 +3,7 @@ import Header from '../components/Header'; // Import Header
 import Footer from '../components/Footer'; // Import Footer
 import '../styles/styles.css';
 import '../styles/modern.css';
+import '../styles/categories.css'; // Import categories-specific CSS
 // import categories-specific CSS if you have one, e.g., '../styles/categories.css';
 
 const Categories = () => {
@@ -39,11 +40,11 @@ const Categories = () => {
               <label htmlFor="price-range"><i className="fas fa-dollar-sign"></i> Price Range:</label>
               <select id="price-range">
                 <option value="all">All Prices</option>
-                <option value="0-50">$0 - $50</option>
-                <option value="50-100">$50 - $100</option>
-                <option value="100-500">$100 - $500</option>
-                <option value="500-1000">$500 - $1000</option>
-                <option value="1000+">$1000+</option>
+                <option value="0-50">0 - 5000</option>
+                <option value="50-100">5000 - 10000</option>
+                <option value="100-500">10000 - 50000</option>
+                <option value="500-1000">50000 - 100000</option>
+                <option value="1000+">100000+</option>
               </select>
             </div>
           </div>

@@ -15,9 +15,9 @@ import Sell from './pages/Sell';
 function App() {
   return (
     <Router>
-      <Header />
+      
       <Routes>
-       <Route path="/" element={<Home />} />
+       <Route path="/home" element={<Home />} />
         <Route path="/browse" element={<Browse />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/categories" element={<Categories />} />
@@ -28,7 +28,7 @@ function App() {
         <Route path="/sell" element={<Sell />} />
        
       </Routes>
-      <Footer />
+      
       
     </Router>
   );
