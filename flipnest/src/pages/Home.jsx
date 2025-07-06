@@ -11,7 +11,7 @@ import '../styles/modern.css';
 const Home = () => {
   return (
     <>
-    <body>
+    
         <Header />
       {/* Hero Section */}
       <section className="hero">
@@ -128,7 +128,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      </body>
+      
       <Footer />
     </>
   );

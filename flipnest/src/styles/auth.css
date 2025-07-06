@@ -176,6 +176,8 @@
 
 .error-message.show {
     display: block;
+    text-size-adjust: 16px;
+    color: red;
 }
 
 /* Responsive Styles */
