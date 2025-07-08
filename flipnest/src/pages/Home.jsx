@@ -4,6 +4,7 @@ import Header from '../components/Header'; // Import Header
 import Footer from '../components/Footer'; // Import Footer
 import '../styles/styles.css';
 import '../styles/modern.css';
+import FeaturedProducts from './FeaturedProducts';
 
 
 
@@ -58,9 +59,9 @@ const Home = () => {
       <section className="featured-products">
         <div className="container">
           <h2 className="section-title">Featured Items</h2>
-          <div className="product-grid" id="featured-products">
-            <div className="loading">Loading products...</div>
-          </div>
+          
+            <FeaturedProducts />
+          
         </div>
       </section>
 
