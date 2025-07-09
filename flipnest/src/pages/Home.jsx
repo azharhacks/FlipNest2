@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import Header from '../components/Header'; // Import Header
 import Footer from '../components/Footer'; // Import Footer
-import '../styles/styles.css';
-import '../styles/modern.css';
+import '../styles/styles.css'; // Import main styles
+import '../styles/modern.css'; // Import modern styles
 import FeaturedItems from './FeaturedItems';
 
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
 import '../styles/styles.css';
 import '../styles/modern.css';
+
+
 
 function FeaturedItems() {
   const [items, setItems] = useState([]);

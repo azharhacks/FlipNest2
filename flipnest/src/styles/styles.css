@@ -241,6 +241,12 @@ nav ul li a:hover {
 .product-card:hover {
     transform: translateY(-5px);
 }
+.item-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
 
 .product-image {
     position: relative;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // for navigation
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -23,8 +23,14 @@ const Cart = () => {
       alert("Your cart is empty!");
       return;
     }
-    navigate('/checkout'); // redirect to checkout page
+    navigate('/checkout');
   };
+
+  // ✅ Calculate total price
+  const totalPrice = cartItems.reduce((total, item) => {
+    const price = parseFloat(item.price);
+    return total + (isNaN(price) ? 0 : price);
+  }, 0);
 
   return (
     <>
@@ -59,16 +65,15 @@ const Cart = () => {
             )}
           </div>
 
-          {/* Go to Checkout Button */}
-          <div className="cart-actions">
-            <button
-              className="btn btn-primary"
-              onClick={handleCheckout}
-              disabled={cartItems.length === 0}
-            >
-              Go to Checkout
-            </button>
-          </div>
+          {/* ✅ Total and Checkout */}
+          {cartItems.length > 0 && (
+            <div className="cart-summary">
+              <h3>Total: Ksh {totalPrice.toLocaleString()}</h3>
+              <button className="btn btn-primary" onClick={handleCheckout}>
+                Go to Checkout
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

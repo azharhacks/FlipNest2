@@ -121,7 +121,7 @@ function Sell() {
                     name="price"
                     value={formData.price}
                     onChange={handleChange}
-                    min="0.01"
+                    min="0.00"
                     required
                   />
                 </div>
