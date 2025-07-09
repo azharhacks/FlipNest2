@@ -1,16 +1,54 @@
-import React from 'react';
-import Header from '../components/Header'; // Import Header
-import Footer from '../components/Footer'; // Import Footer
+import React, { useState } from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import '../styles/styles.css';
 import '../styles/modern.css';
-import '../styles/sell.css'; // Import sell-specific CSS
-function Sell(){
-    return(
-        <>
-        <body>
-        <Header />
+import '../styles/sell.css';
 
-         {/* Sell Item Section */}
+function Sell() {
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    condition: '',
+    description: '',
+    price: '',
+    location: '',
+    contactPreference: 'app-messaging',
+    images: []
+  });
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'images') {
+      setFormData({ ...formData, images: Array.from(files).map(file => URL.createObjectURL(file)) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const storedItems = JSON.parse(localStorage.getItem('listedItems')) || [];
+    storedItems.push(formData);
+    localStorage.setItem('listedItems', JSON.stringify(storedItems));
+
+    alert("Item listed successfully!");
+    setFormData({
+      title: '',
+      category: '',
+      condition: '',
+      description: '',
+      price: '',
+      location: '',
+      contactPreference: 'app-messaging',
+      images: []
+    });
+  };
+
+  return (
+    <>
+      <Header />
       <section className="sell-section">
         <div className="container">
           <div className="sell-container">
@@ -19,13 +57,15 @@ function Sell(){
               <p>Fill out the form below to list your item for sale.</p>
             </div>
 
-            <form id="sell-form" className="sell-form">
+            <form className="sell-form" onSubmit={handleSubmit}>
+              {/* Input Fields (same as before) */}
               <div className="form-group">
                 <label htmlFor="title">Item Title*</label>
                 <input
                   type="text"
-                  id="title"
                   name="title"
+                  value={formData.title}
+                  onChange={handleChange}
                   required
                   placeholder="e.g., Apple MacBook Pro 2020"
                 />
@@ -34,10 +74,8 @@ function Sell(){
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="category">Category*</label>
-                  <select id="category" name="category" required defaultValue="">
-                    <option value="" disabled>
-                      Select a category
-                    </option>
+                  <select name="category" value={formData.category} onChange={handleChange} required>
+                    <option value="" disabled>Select a category</option>
                     <option value="electronics">Electronics</option>
                     <option value="furniture">Furniture</option>
                     <option value="clothing">Clothing</option>
@@ -52,10 +90,8 @@ function Sell(){
 
                 <div className="form-group">
                   <label htmlFor="condition">Condition*</label>
-                  <select id="condition" name="condition" required defaultValue="">
-                    <option value="" disabled>
-                      Select condition
-                    </option>
+                  <select name="condition" value={formData.condition} onChange={handleChange} required>
+                    <option value="" disabled>Select condition</option>
                     <option value="New">New</option>
                     <option value="Like New">Like New</option>
                     <option value="Excellent">Excellent</option>
@@ -69,58 +105,52 @@ function Sell(){
               <div className="form-group">
                 <label htmlFor="description">Description*</label>
                 <textarea
-                  id="description"
                   name="description"
+                  value={formData.description}
+                  onChange={handleChange}
                   required
-                  placeholder="Describe your item in detail. Include features, specifications, any defects or wear, etc."
-                ></textarea>
+                  placeholder="Describe your item in detail"
+                />
               </div>
 
               <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="price">Price (ksh)*</label>
+                  <label htmlFor="price">Price (Ksh)*</label>
                   <input
                     type="number"
-                    id="price"
                     name="price"
+                    value={formData.price}
+                    onChange={handleChange}
                     min="0.01"
-                    step="0.01"
                     required
-                    placeholder="e.g., 99.99"
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="location">Location*</label>
                   <input
                     type="text"
-                    id="location"
                     name="location"
+                    value={formData.location}
+                    onChange={handleChange}
                     required
-                    placeholder="e.g., New York, NY"
                   />
                 </div>
               </div>
 
               <div className="form-group">
                 <label>Photos (Up to 5)*</label>
-                <div className="image-upload" id="image-upload-area">
-                  <i className="fas fa-cloud-upload-alt"></i>
-                  <p>Drag and drop images here or click to browse</p>
-                  <p className="small">Recommended size: at least 800x600px</p>
-                  <input
-                    type="file"
-                    id="item-images"
-                    name="images"
-                    accept="image/ "
-                    multiple
-                  />
-                </div>
-                <div className="image-preview" id="image-preview"></div>
+                <input
+                  type="file"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="form-group">
-                <label htmlFor="contact-preference">Contact Preference</label>
-                <select id="contact-preference" name="contactPreference">
+                <label htmlFor="contactPreference">Contact Preference</label>
+                <select name="contactPreference" value={formData.contactPreference} onChange={handleChange}>
                   <option value="app-messaging">App Messaging (Default)</option>
                   <option value="email">Email</option>
                   <option value="phone">Phone</option>
@@ -134,9 +164,9 @@ function Sell(){
           </div>
         </div>
       </section>
-        <Footer />
-        </body>
-        </>
-    );
-};
+      <Footer />
+    </>
+  );
+}
+
 export default Sell;
