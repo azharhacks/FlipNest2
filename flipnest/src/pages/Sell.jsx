@@ -16,10 +16,14 @@ function Sell() {
     contactPreference: 'app-messaging',
     images: []
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'images') {
+      // Create object URLs for image preview
       setFormData({ ...formData, images: Array.from(files).map(file => URL.createObjectURL(file)) });
     } else {
       setFormData({ ...formData, [name]: value });
@@ -28,22 +32,54 @@ function Sell() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
+    // Generate a unique ID for the item
+    const itemId = `item-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    // Get current date in ISO format
+    const currentDate = new Date().toISOString().split('T')[0];
+    
+    // Get user info from localStorage (if available)
+    const user = JSON.parse(localStorage.getItem('loggedInUser')) || { name: 'Anonymous Seller' };
+    
+    // Create the new item with all required fields
+    const newItem = {
+      id: itemId,
+      title: formData.title,
+      category: formData.category,
+      condition: formData.condition,
+      description: formData.description,
+      price: formData.price,
+      location: formData.location,
+      contactPreference: formData.contactPreference,
+      images: formData.images,
+      seller: user.name,
+      date: currentDate
+    };
+
+    // Add to localStorage
     const storedItems = JSON.parse(localStorage.getItem('listedItems')) || [];
-    storedItems.push(formData);
+    storedItems.push(newItem);
     localStorage.setItem('listedItems', JSON.stringify(storedItems));
 
-    alert("Item listed successfully!");
-    setFormData({
-      title: '',
-      category: '',
-      condition: '',
-      description: '',
-      price: '',
-      location: '',
-      contactPreference: 'app-messaging',
-      images: []
-    });
+    // Show success message and reset form
+    setSubmitSuccess(true);
+    setIsSubmitting(false);
+    
+    setTimeout(() => {
+      setSubmitSuccess(false);
+      setFormData({
+        title: '',
+        category: '',
+        condition: '',
+        description: '',
+        price: '',
+        location: '',
+        contactPreference: 'app-messaging',
+        images: []
+      });
+    }, 3000);
   };
 
   return (
@@ -57,8 +93,13 @@ function Sell() {
               <p>Fill out the form below to list your item for sale.</p>
             </div>
 
+            {submitSuccess && (
+              <div className="success-message">
+                <p>Your item has been listed successfully! It will now appear in the listings.</p>
+              </div>
+            )}
+
             <form className="sell-form" onSubmit={handleSubmit}>
-              {/* Input Fields (same as before) */}
               <div className="form-group">
                 <label htmlFor="title">Item Title*</label>
                 <input
@@ -109,22 +150,23 @@ function Sell() {
                   value={formData.description}
                   onChange={handleChange}
                   required
-                  placeholder="Describe your item in detail"
-                />
+                  placeholder="Describe your item in detail. Include features, defects, age, etc."
+                ></textarea>
               </div>
 
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="price">Price (Ksh)*</label>
                   <input
-                    type="number"
+                    type="text"
                     name="price"
                     value={formData.price}
                     onChange={handleChange}
-                    min="0.00"
                     required
+                    placeholder="e.g., 25,000"
                   />
                 </div>
+
                 <div className="form-group">
                   <label htmlFor="location">Location*</label>
                   <input
@@ -133,32 +175,42 @@ function Sell() {
                     value={formData.location}
                     onChange={handleChange}
                     required
+                    placeholder="e.g., Nairobi"
                   />
                 </div>
               </div>
 
               <div className="form-group">
-                <label>Photos (Up to 5)*</label>
-                <input
-                  type="file"
-                  name="images"
-                  accept="image/*"
-                  multiple
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
                 <label htmlFor="contactPreference">Contact Preference</label>
                 <select name="contactPreference" value={formData.contactPreference} onChange={handleChange}>
-                  <option value="app-messaging">App Messaging (Default)</option>
+                  <option value="app-messaging">App Messaging</option>
                   <option value="email">Email</option>
                   <option value="phone">Phone</option>
                 </select>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-block">
-                List Item for Sale
+              <div className="form-group">
+                <label htmlFor="images">Upload Images</label>
+                <input
+                  type="file"
+                  name="images"
+                  onChange={handleChange}
+                  multiple
+                  accept="image/*"
+                />
+                <small>You can upload multiple images. First image will be the main image.</small>
+              </div>
+
+              {formData.images.length > 0 && (
+                <div className="image-preview">
+                  {formData.images.map((image, index) => (
+                    <img key={index} src={image} alt={`Preview ${index + 1}`} />
+                  ))}
+                </div>
+              )}
+
+              <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                {isSubmitting ? 'Listing Item...' : 'List Item'}
               </button>
             </form>
           </div>
